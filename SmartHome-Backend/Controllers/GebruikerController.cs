@@ -20,7 +20,7 @@ namespace SmartHome_Backend.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<List<Gebruiker>>> GetGebruikers()
+        public async Task<ActionResult<List<Gebruiker>>> AlleGebruikers()
         {
            var Gebruikers = await _context.Gebruikers.ToListAsync();
             return Ok(Gebruikers);
