@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using SmartHome_Backend.Entities;
+using SmartHome_Backend.Model;
 namespace SmartHome_Backend.Data
 {
     public class DataContext : DbContext

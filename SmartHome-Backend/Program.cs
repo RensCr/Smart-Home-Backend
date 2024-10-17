@@ -10,7 +10,10 @@ string connectionString = "Server=127.0.0.1;Database=smarthome;Uid=root;Pwd=;Con
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.AddSwaggerGen(c =>
+{
+    c.EnableAnnotations(); // Hiermee schakel je Swagger-annotaties in
+});
 
 builder.Services.AddDbContext<DataContext>(options => 
 {

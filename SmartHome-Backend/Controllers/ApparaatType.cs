@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using SmartHome_Backend.Data;
-using SmartHome_Backend.Entities;
+using SmartHome_Backend.Model;
 using Microsoft.EntityFrameworkCore;
 
 namespace SmartHome_Backend.Controllers

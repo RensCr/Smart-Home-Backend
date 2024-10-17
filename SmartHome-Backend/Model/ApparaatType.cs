@@ -1,4 +1,4 @@
-﻿namespace SmartHome_Backend.Entities
+﻿namespace SmartHome_Backend.Model
 {
     public class ApparaatType
     {
