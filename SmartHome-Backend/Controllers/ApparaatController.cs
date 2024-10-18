@@ -3,10 +3,12 @@ using SmartHome_Backend.Data;
 using SmartHome_Backend.Model;
 using Microsoft.EntityFrameworkCore;
 using Swashbuckle.AspNetCore.Annotations;
+using Microsoft.AspNetCore.Authorization;
 namespace SmartHome_Backend.Controllers
 {
     [ApiController]
     [Route("/[controller]")]
+    [Authorize]
     public class ApparaatController : Controller
     {
         private readonly DataContext _context;
