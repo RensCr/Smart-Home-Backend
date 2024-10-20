@@ -11,6 +11,19 @@ var builder = WebApplication.CreateBuilder(args);
 string connectionString = "Server=127.0.0.1;Database=smarthome;Uid=root;Pwd=;Convert Zero Datetime=True;";
 builder.Services.AddControllers();
 
+// CORS configuration
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowFrontendOrigin",
+        policy =>
+        {
+            policy.WithOrigins("http://localhost:5173")  // Allow your frontend origin
+                  .AllowAnyHeader()
+                  .AllowAnyMethod()
+                  .AllowCredentials();
+        });
+});
+
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c =>
@@ -25,19 +38,19 @@ builder.Services.AddSwaggerGen(c =>
         Description = "JWT Authorization header using the Bearer scheme."
     });
     c.AddSecurityRequirement(new OpenApiSecurityRequirement
+    {
         {
+            new OpenApiSecurityScheme
             {
-                new OpenApiSecurityScheme
+                Reference = new OpenApiReference
                 {
-                    Reference = new OpenApiReference
-                    {
-                        Type = ReferenceType.SecurityScheme,
-                        Id = "Bearer"
-                    }
-                },
-                new string[] {}
-            }
-        });
+                    Type = ReferenceType.SecurityScheme,
+                    Id = "Bearer"
+                }
+            },
+            new string[] {}
+        }
+    });
     c.EnableAnnotations(); // Enables Swagger annotations
 });
 
@@ -75,6 +88,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+app.UseCors("AllowFrontendOrigin");
 
 app.UseAuthentication();
 app.UseAuthorization();

@@ -2,6 +2,7 @@
 using SmartHome_Backend.Data;
 using SmartHome_Backend.Model;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Authorization;
 
 namespace SmartHome_Backend.Controllers
 {
@@ -17,6 +18,7 @@ namespace SmartHome_Backend.Controllers
         }
 
         [HttpGet]
+        [Authorize]
         public async Task<ActionResult<List<ApparaatType>>> AlleApparaatTypes()
         {
             var apparaatTypes = await _context.ApparatenTypes.ToListAsync();
