@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SmartHome_Backend.Data;
 
@@ -11,9 +12,11 @@ using SmartHome_Backend.Data;
 namespace SmartHome_Backend.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20240926111005_Apparaat")]
+    partial class Apparaat
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -22,7 +25,7 @@ namespace SmartHome_Backend.Migrations
 
             MySqlModelBuilderExtensions.AutoIncrementColumns(modelBuilder);
 
-            modelBuilder.Entity("SmartHome_Backend.Model.Apparaat", b =>
+            modelBuilder.Entity("SmartHome_Backend.Entities.Apparaat", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -48,7 +51,7 @@ namespace SmartHome_Backend.Migrations
                     b.ToTable("Apparaten");
                 });
 
-            modelBuilder.Entity("SmartHome_Backend.Model.ApparaatType", b =>
+            modelBuilder.Entity("SmartHome_Backend.Entities.ApparaatType", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -65,7 +68,7 @@ namespace SmartHome_Backend.Migrations
                     b.ToTable("ApparatenTypes");
                 });
 
-            modelBuilder.Entity("SmartHome_Backend.Model.Gebruiker", b =>
+            modelBuilder.Entity("SmartHome_Backend.Entities.Gebruiker", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -91,26 +94,18 @@ namespace SmartHome_Backend.Migrations
                         .IsRequired()
                         .HasColumnType("longtext");
 
-                    b.Property<string>("WoonPlaats")
-                        .IsRequired()
-                        .HasColumnType("longtext");
-
                     b.HasKey("Id");
 
                     b.ToTable("Gebruikers");
                 });
 
-            modelBuilder.Entity("SmartHome_Backend.Model.Huis", b =>
+            modelBuilder.Entity("SmartHome_Backend.Entities.Huis", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
                     MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Beschrijving")
-                        .IsRequired()
-                        .HasColumnType("longtext");
 
                     b.Property<int>("GebruikersId")
                         .HasColumnType("int");
