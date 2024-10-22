@@ -32,7 +32,7 @@ namespace SmartHome_Backend.Controllers
             var Gebruikers = await _context.Gebruikers.ToListAsync();
             return Ok(Gebruikers);
         }
-        [HttpGet("GetUserInfo")]
+        [HttpGet("GebruikersInfo")]
         [Authorize]
         public async Task<ActionResult<Gebruiker>> GetUserInfo()
         {
@@ -92,7 +92,7 @@ namespace SmartHome_Backend.Controllers
             var tokenDescriptor = new SecurityTokenDescriptor
             {
                 Subject = new ClaimsIdentity(new[] { new Claim("id", gebruiker.Id.ToString()) }),
-                Expires = DateTime.UtcNow.AddHours(1),
+                Expires = DateTime.UtcNow.AddHours(24),
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature),
                 Issuer = "Localhost"
             };

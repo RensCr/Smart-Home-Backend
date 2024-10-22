@@ -88,5 +88,45 @@ namespace SmartHome_Backend.Controllers
             await _context.SaveChangesAsync();
             return Ok(apparaat);
         }
+        [HttpGet("{huisId}")]
+        [Authorize]
+        public async Task<ActionResult<object>> KrijgSlimmeApparaten(int huisId)
+        {
+            var userIdClaim = User.Claims.FirstOrDefault(c => c.Type == "id");
+            if (userIdClaim == null)
+            {
+                return Unauthorized("User ID claim not found.");
+            }
+
+            if (!int.TryParse(userIdClaim.Value, out int userId))
+            {
+                return BadRequest("Invalid user ID claim.");
+            }
+
+            var huis = await _context.Huizen.FirstOrDefaultAsync(h => h.Id == huisId && h.GebruikersId == userId);
+            if (huis == null)
+            {
+                return BadRequest("Invalid HuisId or unauthorized access.");
+            }
+
+            var slimmeApparatenHuis = await _context.Apparaten
+                .Where(a => a.Slim && a.HuisId == huisId)
+                .CountAsync();
+            var slimmeApparatenGebruiker = await _context.Apparaten
+               .Where(a => a.Slim && _context.Huizen.Any(h => h.Id == a.HuisId && h.GebruikersId == userId))
+               .CountAsync();
+
+            var result = new
+            {
+                slimmeApparatenHuis = slimmeApparatenHuis,
+                slimmeApparatenGebruiker = slimmeApparatenGebruiker,
+                Stad = huis.Locatie,
+                beschrijving = huis.Beschrijving
+            };
+
+            return Ok(result);
+        }
+
+
     }
 }
