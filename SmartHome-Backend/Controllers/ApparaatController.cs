@@ -49,7 +49,8 @@ namespace SmartHome_Backend.Controllers
                           Naam = apparaat.Naam,
                           Slim = apparaat.Slim,
                           apparaatType = type.Type,
-                          HuisId = apparaat.HuisId
+                          HuisId = apparaat.HuisId,
+                          Status = apparaat.Status
                       })
                 .ToListAsync();
 
@@ -82,7 +83,8 @@ namespace SmartHome_Backend.Controllers
                 Naam = apparaat.Naam,
                 ApparaatTypeId = apparaat.ApparaatTypeId,
                 HuisId = apparaat.HuisId,
-                Slim = apparaat.Slim
+                Slim = apparaat.Slim,
+                Status=false
             };
             _context.Apparaten.Add(nieuwApparaat);
             await _context.SaveChangesAsync();
@@ -126,7 +128,32 @@ namespace SmartHome_Backend.Controllers
 
             return Ok(result);
         }
-
+        [HttpPost("verranderStatus")]
+        [Authorize]
+        public async Task<ActionResult> VerranderApparaatStatus([FromBody] ApparaatStatus apparaatStatus)
+        {
+            var apparaat = await _context.Apparaten.FindAsync(apparaatStatus.ApparaatId);
+            if (apparaat == null)
+            {
+                return NotFound("apparaat niet gevonden");
+            }
+            apparaat.Status = apparaatStatus.Status;
+            await _context.SaveChangesAsync();
+            return Ok();
+        }
+        [HttpPost("verranderSlim")]
+        [Authorize]
+        public async Task<ActionResult> VerranderApparaatSlim([FromBody] ApparaatStatus apparaatStatus)
+        {
+            var apparaat = await _context.Apparaten.FindAsync(apparaatStatus.ApparaatId);
+            if (apparaat == null)
+            {
+                return NotFound("apparaat niet gevonden");
+            }
+            apparaat.Slim = apparaatStatus.Status;
+            await _context.SaveChangesAsync();
+            return Ok();
+        }
 
     }
 }
