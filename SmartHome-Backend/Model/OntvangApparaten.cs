@@ -7,5 +7,6 @@
         public bool Slim { get; set; }
         public string apparaatType { get; set; }
         public int HuisId { get; set; }
+        public bool Status { get; set; }
     }
 }
