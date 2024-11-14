@@ -109,7 +109,7 @@ namespace SmartHome_Backend.Controllers
             {
                 return NotFound("House not found.");
             }
-            var PlattegrondInformatie = new 
+            var PlattegrondInformatie = new PlattegrondInformatie
             {
                 ApparatenJson = huis.ApparatenJson,
                 KamersJson = huis.KamersJson,
