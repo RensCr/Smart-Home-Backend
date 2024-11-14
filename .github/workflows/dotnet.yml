@@ -15,7 +15,7 @@ jobs:
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: ./SmartHome-Backend
+        working-directory: ./Smart-Home-UnitTest
 
     steps:
     - uses: actions/checkout@v4
