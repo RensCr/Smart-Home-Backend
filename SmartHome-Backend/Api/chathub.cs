@@ -25,13 +25,13 @@ namespace SmartHome_Backend.Api
             {
                 string groupIdentifier = $"manager-{userId}";
 
-                await Clients.Group(groupIdentifier).SendAsync("ReceiveMessage", userId, message);
+                await Clients.Group(groupIdentifier).SendAsync("ReceiveMessage", userId, message,targetIdString);
             }
             else
             {
                 string groupIdentifier = $"manager-{targetIdString}";
 
-                await Clients.Group(groupIdentifier).SendAsync("ReceiveMessage", userId, message);
+                await Clients.Group(groupIdentifier).SendAsync("ReceiveMessage", userId, message,targetIdString);
             }
         }
 
