@@ -4,20 +4,23 @@ using Microsoft.OpenApi.Models;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using SmartHome_Backend.Api;
+using Microsoft.AspNetCore.SignalR;
+using SmartHome_Backend;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 string connectionString = "Server=127.0.0.1;Database=smarthome;Uid=root;Pwd=;Convert Zero Datetime=True;";
 builder.Services.AddControllers();
-
+builder.Services.AddSignalR();
 // CORS configuration
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowFrontendOrigin",
         policy =>
         {
-            policy.WithOrigins("http://localhost:5173")  // Allow your frontend origin
+            policy.WithOrigins("http://localhost:5173", "http://localhost:5174")  // Allow your frontend origin
                   .AllowAnyHeader()
                   .AllowAnyMethod()
                   .AllowCredentials();
@@ -96,4 +99,7 @@ app.UseAuthorization();
 
 app.UseHttpsRedirection();
 app.MapControllers();
+app.MapHub<ChatHub>("/chathub");
+
+
 app.Run();
